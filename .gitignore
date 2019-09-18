@@ -1,0 +1,6 @@
+
+# standard app files
+*/*/node_modules/
+*/*/.env
+*/*/README.rst
+*/download_files
