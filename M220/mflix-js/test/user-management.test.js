@@ -47,8 +47,12 @@ describe("User Management", () => {
 
   test("it allows a user to login", async () => {
     const actual = await UsersDAO.loginUser(testUser.email, sessionUser.jwt)
+    console.log("actual::::", actual)
     expect(actual.success).toBeTruthy()
+    console.log("testUser.email", testUser)
+    console.log("sessionUser:::", sessionUser)
     const sessionResult = await UsersDAO.getUserSession(testUser.email)
+    console.log("sessionResult:::", sessionResult)
     delete sessionResult._id
     expect(sessionResult).toEqual(sessionUser)
   })
