@@ -8,6 +8,8 @@ describe("Get Comments", () => {
   test("Can fetch comments for a movie", async () => {
     const id = "573a13b5f29313caabd42c2f"
     const movie = await MoviesDAO.getMovieByID(id)
+    console.log("movie:::", movie.comments)
+    console.log("movie.comments.length:::", movie.comments.length)
     expect(movie.title).toEqual("The Express")
     expect(movie.comments.length).toBe(147)
   })

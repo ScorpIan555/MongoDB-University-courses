@@ -271,11 +271,6 @@ export default class MoviesDAO {
 
     // TODO Ticket: Paging
     // Use the cursor to only return the movies that belong on the current page
-    // let skips = (moviesPerPage, page) => {
-    //   let num = moviesPerPage * page
-    //   console.log('num:', num)
-    //   return num
-    // }
 
     let skips = moviesPerPage * page
 
@@ -320,7 +315,31 @@ export default class MoviesDAO {
             _id: ObjectId(id),
           },
         },
+        {
+          $lookup: {
+            from: "comments",
+            let: {
+              id: "$_id",
+            },
+            pipeline: [
+              {
+                $match: {
+                  $expr: {
+                    $eq: ["$movie_id", "$$id"],
+                  },
+                },
+              },
+              {
+                $sort: {
+                  date: -1,
+                },
+              },
+            ],
+            as: "comments",
+          },
+        },
       ]
+      console.log("pipeline:::", pipeline)
       return await movies.aggregate(pipeline).next()
     } catch (e) {
       /**
